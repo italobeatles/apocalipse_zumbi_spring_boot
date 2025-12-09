@@ -25,6 +25,9 @@ public class SurvivorService {
 
     @Transactional
     public Survivor create(Survivor survivor) {
+        if (survivor.getRecursos() != null) {
+            survivor.getRecursos().forEach(r -> r.setSurvivor(survivor));
+        }
         return survivorRepository.save(survivor);
     }
 

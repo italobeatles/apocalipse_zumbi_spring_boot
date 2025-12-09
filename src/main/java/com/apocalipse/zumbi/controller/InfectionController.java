@@ -27,6 +27,8 @@ public class InfectionController {
         Long informantId = body.get("id_informante");
         Survivor survivor = survivorRepository.findById(survivorId).orElseThrow();
         Survivor informant = survivorRepository.findById(informantId).orElseThrow();
+        survivor.setZumbi(true);
+        survivorRepository.save(survivor);
         InfectionReport report = new InfectionReport();
         report.setSurvivor(survivor);
         report.setInformant(informant);
