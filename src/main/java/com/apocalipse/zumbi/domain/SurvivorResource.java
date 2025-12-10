@@ -4,6 +4,11 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "tbsobreviventes_recursos")
+@lombok.Getter
+@lombok.Setter
+@lombok.NoArgsConstructor
+@lombok.EqualsAndHashCode(of = "id")
+@lombok.ToString(exclude = {"survivor", "resource"})
 public class SurvivorResource {
 
     @EmbeddedId
@@ -21,35 +26,19 @@ public class SurvivorResource {
 
     private Integer quantidade;
 
-    public SurvivorResourceId getId() {
-        return id;
-    }
-
-    public void setId(SurvivorResourceId id) {
-        this.id = id;
-    }
-
-    public Survivor getSurvivor() {
-        return survivor;
-    }
-
     public void setSurvivor(Survivor survivor) {
         this.survivor = survivor;
-    }
-
-    public Resource getResource() {
-        return resource;
+        if (id == null) {
+            id = new SurvivorResourceId();
+        }
+        id.setSurvivorId(survivor != null ? survivor.getId() : null);
     }
 
     public void setResource(Resource resource) {
         this.resource = resource;
-    }
-
-    public Integer getQuantidade() {
-        return quantidade;
-    }
-
-    public void setQuantidade(Integer quantidade) {
-        this.quantidade = quantidade;
+        if (id == null) {
+            id = new SurvivorResourceId();
+        }
+        id.setResourceId(resource != null ? resource.getId() : null);
     }
 }

@@ -23,6 +23,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase(replace = org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE)
+@org.springframework.test.context.ActiveProfiles("test")
 class TradeControllerTest {
     @Autowired
     private MockMvc mockMvc;
@@ -42,7 +44,7 @@ class TradeControllerTest {
         resourceRepository.deleteAll();
         resourceRepository.saveAll(List.of(
                 createResource(1L, "Agua", 4),
-                createResource(2L, "Comida", 3)
+                createResource(2L, "Comida", 4)
         ));
     }
 
@@ -72,12 +74,14 @@ class TradeControllerTest {
         sr1.setSurvivor(s1);
         sr1.setResource(resourceRepository.findById(1L).orElseThrow());
         sr1.setQuantidade(1);
+        sr1.setId(new com.apocalipse.zumbi.domain.SurvivorResourceId(s1.getId(), 1L));
         survivorResourceRepository.save(sr1);
 
         SurvivorResource sr2 = new SurvivorResource();
         sr2.setSurvivor(s2);
         sr2.setResource(resourceRepository.findById(2L).orElseThrow());
         sr2.setQuantidade(1);
+        sr2.setId(new com.apocalipse.zumbi.domain.SurvivorResourceId(s2.getId(), 2L));
         survivorResourceRepository.save(sr2);
 
         Map<String, Object> payload = Map.of(

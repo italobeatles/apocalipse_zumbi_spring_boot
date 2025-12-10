@@ -10,7 +10,8 @@ import com.apocalipse.zumbi.repository.SurvivorRepository;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
-@Import(SurvivorRepository.class)
+@org.springframework.test.context.ActiveProfiles("test")
+@org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase(replace = org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE)
 class SurvivorModelTest {
 
     @Autowired
